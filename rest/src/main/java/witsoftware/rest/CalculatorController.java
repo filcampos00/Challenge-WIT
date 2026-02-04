@@ -1,4 +1,4 @@
-package witsoftware.rest.controllers;
+package witsoftware.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.NotNull;

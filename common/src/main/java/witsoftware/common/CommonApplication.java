@@ -1,13 +1,14 @@
-package witsoftware.rest;
+package witsoftware.common;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// is this boot application needed?
 @SpringBootApplication
-public class RestApplication {
+public class CommonApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RestApplication.class, args);
-            System.out.println("REST module is running...");
+        SpringApplication.run(CommonApplication.class, args);
     }
+
 }

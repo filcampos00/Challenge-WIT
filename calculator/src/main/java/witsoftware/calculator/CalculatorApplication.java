@@ -10,5 +10,4 @@ public class CalculatorApplication {
         SpringApplication.run(CalculatorApplication.class, args);
         System.out.println("Calculator module is running...");
     }
-
 }

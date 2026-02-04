@@ -10,9 +10,9 @@
         <relativePath>../pom.xml</relativePath> <!-- Path to parent -->
     </parent>
 
-    <artifactId>calculator</artifactId>
-    <name>Calculator Module</name>
-    <description>Calculator module performing arithmetic operations</description>
+    <artifactId>common</artifactId>
+    <name>Common Module</name>
+    <description>Common module for shared utilities and classes</description>
 
     <url/>
     <licenses>
@@ -39,27 +39,14 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-kafka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-kafka-test</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>wit-software</groupId>
-            <artifactId>common</artifactId>
         </dependency>
     </dependencies>
 

@@ -21,6 +21,7 @@
     <modules>
         <module>rest</module>
         <module>calculator</module>
+        <module>common</module>
     </modules>
 
     <url/>
@@ -62,6 +63,11 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>1.11.0</version>
+            </dependency>
+            <dependency>
+                <groupId>wit-software</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
