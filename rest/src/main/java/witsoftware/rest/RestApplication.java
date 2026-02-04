@@ -8,6 +8,7 @@ public class RestApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RestApplication.class, args);
+            System.out.println("REST module is running...");
     }
 
 }

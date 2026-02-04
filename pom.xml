@@ -41,52 +41,39 @@
         <java.version>21</java.version>
     </properties>
 
-    <!-- common dependencies -->
-    <dependencies>
-        <!--        fix dependencies vulnerabilities-->
-        <dependency>
-            <groupId>org.lz4</groupId>
-            <artifactId>lz4-java</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <!--        fix dependencies vulnerabilities-->
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.11.0</version>
-        </dependency>
-        <!--        fix dependencies vulnerabilities-->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.27.7</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-kafka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-kafka-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <!-- manage dependencies versions for child modules -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- fix spring boot starter (and starter mvc) test vulnerabilities -->
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.27.7</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- fix kafka vulnerabilities -->
+            <dependency>
+                <groupId>org.lz4</groupId>
+                <artifactId>lz4-java</artifactId>
+                <version>1.8.1</version>
+            </dependency>
+            <!-- fix kafka test vulnerabilities-->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.11.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
-        <!-- Manage plugin versions for child modules -->
+        <!-- manage plugin versions for child modules -->
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>4.0.2</version>
+<!--                    <version>4.0.2</version>-->
                 </plugin>
             </plugins>
         </pluginManagement>
