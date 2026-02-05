@@ -1,30 +1,37 @@
-package witsoftware.rest;
-
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
-import witsoftware.common.OperationEnum;
-import witsoftware.common.dtos.CalculationRequest;
-
-import java.math.BigDecimal;
-
-// service or component?
-@Service
-public class CalculationRequestsProducer {
-    private final String topicName;
-    private KafkaTemplate<String, CalculationRequest> kafkaTemplate;
-
-    public CalculationRequestsProducer() {
-        this.topicName = "${KAFKA_CALCULATOR_TOPIC}";
-    }
-
-    // TODO: add error handling, logging, etc.
-
-    public void sendMessage(BigDecimal a, BigDecimal b, OperationEnum op) {
-        var request = new CalculationRequest(a, b, op);
-        kafkaTemplate.send(topicName, request).
-                thenRun(() -> System.out.println("Message sent to ${topicName}: " + request));
-        // should probably be async and must return some kind of response to the controller
-    }
-
-    // TODO: create a central service, separate kafka producer and consumer
-}
+//package witsoftware.rest;
+//
+//import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.kafka.core.KafkaTemplate;
+//import org.springframework.kafka.support.SendResult;
+//import org.springframework.stereotype.Component;
+//import witsoftware.common.OperationEnum;
+//import witsoftware.common.dtos.CalculationRequest;
+//
+//import java.math.BigDecimal;
+//import java.util.concurrent.CompletableFuture;
+//
+//@Component
+//public class CalculationRequestsProducer {
+//    private final String topicName;
+//    private KafkaTemplate<String, CalculationRequest> kafkaTemplate;
+//
+//    public CalculationRequestsProducer(
+//            KafkaTemplate<String, CalculationRequest> kafkaTemplate,
+//            @Value("${KAFKA_TOPIC_REQUEST}") String topicName) {
+//        this.kafkaTemplate = kafkaTemplate;
+//        this.topicName = topicName;
+//    }
+//
+//    public CompletableFuture<SendResult<String, CalculationRequest>> sendMessage(CalculationRequest request) {
+//        CompletableFuture<SendResult<String, CalculationRequest>> future = kafkaTemplate.send(topicName, request);
+//
+//        future.whenComplete((sendResult, ex) -> {
+//            if (ex != null) {
+//                System.out.println("Error sending message: " + ex.getMessage());
+//            } else {
+//                System.out.println("Message sent successfully: " + sendResult.getProducerRecord().value());
+//            }
+//        });
+//        return future;
+//    }
+//}

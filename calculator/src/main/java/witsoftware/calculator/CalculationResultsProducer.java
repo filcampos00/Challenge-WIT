@@ -1,4 +1,4 @@
-package witsoftware.calculator;
-
-public class CalculationResultsProducer {
-}
+//package witsoftware.calculator;
+//
+//public class CalculationResultsProducer {
+//}

@@ -1,6 +1,6 @@
-package witsoftware.calculator;
-
-
-public class CalculationRequestsConsumer {
-
-}
+//package witsoftware.calculator;
+//
+//
+//public class CalculationRequestsConsumer {
+//
+//}
