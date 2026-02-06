@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public record CalculationResponse(
         String requestId,
-        BigDecimal result,
+        BigDecimal total,
         String errorMessage
 ) {
 }

@@ -16,7 +16,6 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 @RequestMapping("/calculator")
 public class CalculatorController {
-    private final String resultPrefix = "Result: ";
     private final CalculationService calculationService;
 
     public CalculatorController(CalculationService calculationService) {
@@ -28,21 +27,7 @@ public class CalculatorController {
     public CompletableFuture<ResponseEntity<String>> sum(
             @RequestParam @NotNull BigDecimal a,
             @RequestParam @NotNull BigDecimal b) {
-
-        System.out.println("IM IN THE CONTROLLER, A: " + a + " B: " + b);
-
-        return calculationService.sendRequest(a, b, OperationEnum.ADD)
-                .thenApply(response -> {
-                    if (response.errorMessage() != null) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                .body("Error: " + response.errorMessage());
-                    }
-                    return ResponseEntity.ok(resultPrefix + response.result());
-                })
-                .exceptionally(ex -> {
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                            .body("Error during calculation: " + ex.getMessage());
-                });
+        return calculate(a, b, OperationEnum.ADD);
     }
 
     @Operation(summary = "Subtract Endpoint", description = "Calculates the subtraction of two numbers.")
@@ -50,17 +35,7 @@ public class CalculatorController {
     public CompletableFuture<ResponseEntity<String>> subtract(
             @RequestParam @NotNull BigDecimal a,
             @RequestParam @NotNull BigDecimal b) {
-
-        return calculationService.sendRequest(a, b, OperationEnum.SUBTRACT)
-                .thenApply(response -> {
-                    if (response.errorMessage() != null) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                .body("Error: " + response.errorMessage());
-                    }
-                    return ResponseEntity.ok(resultPrefix + response.result());
-                })
-                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Error during calculation: " + ex.getMessage()));
+        return calculate(a, b, OperationEnum.SUBTRACT);
     }
 
     @Operation(summary = "Multiply Endpoint", description = "Calculates the multiplication of two numbers.")
@@ -68,17 +43,7 @@ public class CalculatorController {
     public CompletableFuture<ResponseEntity<String>> multiply(
             @RequestParam @NotNull BigDecimal a,
             @RequestParam @NotNull BigDecimal b) {
-
-        return calculationService.sendRequest(a, b, OperationEnum.MULTIPLY)
-                .thenApply(response -> {
-                    if (response.errorMessage() != null) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                .body("Error: " + response.errorMessage());
-                    }
-                    return ResponseEntity.ok(resultPrefix + response.result());
-                })
-                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Error during calculation: " + ex.getMessage()));
+        return calculate(a, b, OperationEnum.MULTIPLY);
     }
 
     @Operation(summary = "Divide Endpoint", description = "Calculates the division of two numbers.")
@@ -86,14 +51,17 @@ public class CalculatorController {
     public CompletableFuture<ResponseEntity<String>> divide(
             @RequestParam @NotNull BigDecimal a,
             @RequestParam @NotNull BigDecimal b) {
+        return calculate(a, b, OperationEnum.DIVIDE);
+    }
 
-        return calculationService.sendRequest(a, b, OperationEnum.DIVIDE)
+    private CompletableFuture<ResponseEntity<String>> calculate(BigDecimal a, BigDecimal b, OperationEnum op) {
+        return calculationService.sendRequest(a, b, op)
                 .thenApply(response -> {
                     if (response.errorMessage() != null) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                 .body("Error: " + response.errorMessage());
                     }
-                    return ResponseEntity.ok(resultPrefix + response.result());
+                    return ResponseEntity.ok("Result: " + response.total());
                 })
                 .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body("Error during calculation: " + ex.getMessage()));

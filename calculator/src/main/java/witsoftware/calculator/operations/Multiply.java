@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 public class Multiply implements IOperation {
     @Override
     public BigDecimal calculate(BigDecimal a, BigDecimal b) {
-        throw new UnsupportedOperationException("Not supported yet.");
-
+        return a.multiply(b);
     }
 }
