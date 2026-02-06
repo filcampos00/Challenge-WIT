@@ -24,6 +24,9 @@ public class CalculationResultsConsumer {
         log.debug("Received response from Kafka: topic={}, requestId={}",
                  record.topic(), response.requestId());
 
-        calculationService.completeRequest(response.requestId(), response);
+        boolean completed = calculationService.completeRequest(response);
+        if (!completed) {
+            log.warn("Failed to complete request for requestId={}", response.requestId());
+        }
     }
 }

@@ -44,16 +44,20 @@ public class CalculationService {
         return future;
     }
 
-    public void completeRequest(String requestId, CalculationResponse response) {
-        CompletableFuture<CalculationResponse> future = pendingCalculations.remove(requestId);
+    public boolean completeRequest(CalculationResponse response) {
+        String id = response.requestId();
+        CompletableFuture<CalculationResponse> future = pendingCalculations.remove(id);
+
         if (future != null) {
             log.debug("Completing requestId={}, total={}, error={}",
-                    requestId, response.total(), response.errorMessage());
+                    id, response.total(), response.errorMessage());
 
             future.complete(response);
+            return true;
         }
         else  {
-            log.warn("No pending calculation found for requestId={}", requestId);
+            log.warn("No pending calculation found for requestId={}", id);
+            return false;
         }
     }
 }
