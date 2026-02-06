@@ -1,10 +1,11 @@
-package witsoftware.rest;
+package witsoftware.rest.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import witsoftware.common.OperationEnum;
+import witsoftware.common.enumerations.OperationEnum;
 import witsoftware.common.dtos.CalculationRequest;
 import witsoftware.common.dtos.CalculationResponse;
+import witsoftware.rest.services.kafka.CalculationRequestsProducer;
 
 import java.math.BigDecimal;
 import java.util.UUID;

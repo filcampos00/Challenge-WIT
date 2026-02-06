@@ -1,10 +1,11 @@
-package witsoftware.calculator;
+package witsoftware.calculator.services.kafka;
 
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import witsoftware.calculator.services.CalculatorService;
 import witsoftware.common.dtos.CalculationRequest;
 import witsoftware.common.dtos.CalculationResponse;
 

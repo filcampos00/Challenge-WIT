@@ -1,9 +1,9 @@
-package witsoftware.calculator;
+package witsoftware.calculator.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import witsoftware.calculator.operations.*;
-import witsoftware.common.OperationEnum;
+import witsoftware.common.enumerations.OperationEnum;
 import witsoftware.common.dtos.CalculationRequest;
 import witsoftware.common.dtos.CalculationResponse;
 

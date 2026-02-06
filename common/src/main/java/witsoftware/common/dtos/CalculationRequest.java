@@ -1,6 +1,6 @@
 package witsoftware.common.dtos;
 
-import witsoftware.common.OperationEnum;
+import witsoftware.common.enumerations.OperationEnum;
 
 import java.math.BigDecimal;
 

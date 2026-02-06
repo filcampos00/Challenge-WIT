@@ -1,4 +1,4 @@
-package witsoftware.common;
+package witsoftware.common.enumerations;
 
 public enum OperationEnum {
     ADD,
