@@ -1,5 +1,6 @@
 package witsoftware.rest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -8,6 +9,7 @@ import witsoftware.common.dtos.CalculationRequest;
 
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @Component
 public class CalculationRequestsProducer {
     private final KafkaTemplate<String, CalculationRequest> kafkaTemplate;
@@ -20,6 +22,17 @@ public class CalculationRequestsProducer {
     }
 
     public CompletableFuture<SendResult<String, CalculationRequest>> send(CalculationRequest request) {
-        return kafkaTemplate.send(topicName, request);
+        log.debug("Sending request to Kafka: topic={}, requestId={}", topicName, request.requestId());
+
+        return kafkaTemplate.send(topicName, request)
+                .whenComplete((result, ex) -> {
+                    if (ex != null) {
+                        log.error("Failed to send request to Kafka: topic={}, requestId={}",
+                                topicName, request.requestId(), ex);
+                    } else {
+                        log.debug("Request sent to Kafka successfully: topic={}, requestId={}",
+                                topicName, request.requestId());
+                    }
+                });
     }
 }

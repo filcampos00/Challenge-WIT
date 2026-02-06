@@ -31,6 +31,8 @@ services:
     container_name: rest
     ports:
       - "8080:8080"
+    volumes:
+      - ./rest/logs:/app/logs # not a volume, but a bind mount to persist logs
     depends_on:
       - kafka
     networks:
@@ -41,6 +43,8 @@ services:
       context: .
       dockerfile: calculator/Dockerfile
     container_name: calculator
+    volumes:
+      - ./calculator/logs:/app/logs # not a volume, but a bind mount to persist logs
     depends_on:
       - kafka
     networks:

@@ -7,6 +7,7 @@ FROM eclipse-temurin:21-jre-alpine
 RUN addgroup -S spring && adduser -S spring -G spring
 WORKDIR /app
 COPY --from=build /project/rest/target/*.jar app.jar
+RUN mkdir logs
 RUN chown -R spring:spring /app
 USER spring:spring
 EXPOSE 8080

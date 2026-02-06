@@ -2,6 +2,7 @@ package witsoftware.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import witsoftware.common.OperationEnum;
 import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @RestController
 @RequestMapping("/calculator")
 public class CalculatorController {
@@ -55,15 +57,24 @@ public class CalculatorController {
     }
 
     private CompletableFuture<ResponseEntity<String>> calculate(BigDecimal a, BigDecimal b, OperationEnum op) {
+        log.info("Received request to calculate: operand 1={}, operation={}, operand 2={}", a, op, b);
+
         return calculationService.sendRequest(a, b, op)
                 .thenApply(response -> {
                     if (response.errorMessage() != null) {
+                        log.warn("Error calculating requestId={}, returning http status bad request, error={}",
+                                response.requestId(), response.errorMessage());
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                 .body("Error: " + response.errorMessage());
                     }
+                    log.info("Successfully calculated requestId={}, returning http status ok, total={}",
+                            response.requestId(), response.total());
                     return ResponseEntity.ok("Result: " + response.total());
                 })
-                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Error during calculation: " + ex.getMessage()));
+                .exceptionally(ex -> {
+                    log.error("Error during calculation, returning http status internal server error", ex);
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .body("Error during calculation: " + ex.getMessage());
+                });
     }
 }
