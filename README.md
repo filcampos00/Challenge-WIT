@@ -13,7 +13,7 @@ docker-compose up --build
 ```
 To stop services:
 ```
-docker-compose down
+docker-compose stop
 ```
 
 ## Access and logs
